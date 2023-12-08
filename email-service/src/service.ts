@@ -1,6 +1,9 @@
 // email-service/src/email-service.ts
 import * as nodemailer from "nodemailer";
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 export async function sendEmail(to: string, pdfPath: string): Promise<void> {
   try {
     // Create a nodemailer transporter using Fastmail SMTP service
@@ -9,14 +12,14 @@ export async function sendEmail(to: string, pdfPath: string): Promise<void> {
       port: 465,
       secure: true,
       auth: {
-        user: "rehema@fastmail.com", // Fastmail email as SMTP server user
-        pass: "b2u8rkkvx4zratkt", // Fastmail app password
+        user: process.env.FASTMAIL_EMAIL,
+        pass: process.env.FASTMAIL_APP_PASSWORD,
       },
     });
 
     // Setup email data with attachments
     const mailOptions = {
-      from: "rehema@fastmail.com", // Sender address
+      from: process.env.FASTMAIL_EMAIL, // Sender address
       to,
       subject: "Transaction Statement",
       text: "Please find your transaction statement attached.",
