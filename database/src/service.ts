@@ -3,9 +3,18 @@ import * as fs from "fs";
 import * as csvParser from "csv-parser";
 import * as path from "path";
 
-import { Transaction } from "../utils/validationSchemas";
+import { Transaction } from "../../common/validationSchemas";
 
-const CSV_FILE_PATH = path.join(__dirname, "transactions.csv");
+const CSV_FILE_PATH = path.join(__dirname, "../../shared/transactions.csv");
+
+// Check if the file exists
+if (!fs.existsSync(CSV_FILE_PATH)) {
+  console.error(`Error: File not found - ${CSV_FILE_PATH}`);
+  throw new Error("File not found");
+}
+
+// Proceed with reading the file
+fs.createReadStream(CSV_FILE_PATH);
 
 export async function generateStatement(
   date1: string,
@@ -34,7 +43,7 @@ export async function generateStatement(
             transactions.push(transaction);
           }
         } catch (error: any) {
-            console.error(`Error parsing row: ${error.message}`);
+          console.error(`Error parsing row: ${error.message}`);
         }
       })
       .on("end", () => {
