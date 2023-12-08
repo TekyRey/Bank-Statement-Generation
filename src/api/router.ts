@@ -1,18 +1,18 @@
 import * as express from 'express';
 import {generateStatement} from '../database/service';
-import { generateStatementRequestSchema } from '../utils/validationSchemas';
+import {generateStatementRequestSchema} from '../utils/validationSchemas';
 
 
 const router = express.Router();
 
-router.post("/generate-statement", async (req, res) => {
+// Define your routes here
+router.post('/generate-statement', async (req, res) => {
     try {
-        const reqBody = generateStatementRequestSchema.parse(req.body);
-        const transactions = await generateStatement(reqBody);
-        res.json(transactions);
+        const { date1, date2, user_email } = generateStatementRequestSchema.parse(req.body);
+        const transactions = await generateStatement(date1, date2, user_email); // Fix: Pass the arguments to generateStatement function call
+        res.status(200).json(transactions);
     } catch (error: any) {
-        console.error(error);
-        res.status(400).json({ error: error.errors || "Bad Request" });
+        res.status(400).json({ message: error.message });
     }
 });
 

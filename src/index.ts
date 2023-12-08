@@ -13,3 +13,6 @@ app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
+// ISO 8601 format example
+// 2021-08-04T12:00:00
+
