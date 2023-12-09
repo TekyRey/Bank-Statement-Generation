@@ -21,53 +21,26 @@ export async function generatePDF(
   } else {
     pdfDoc.font("Helvetica-Bold").fontSize(12);
 
-    const startX = 50; // Starting X coordinate for the first column
-    const lineHeight = 20; // Line height for each row
-    let currentY = 100; // Starting Y coordinate
+    const startX = 50;
+    const lineHeight = 20;
+    let currentY = 100;
 
-    // Header
     pdfDoc.text("Date", startX, currentY);
-    pdfDoc.text("User Email", startX + 100, currentY);
+    pdfDoc.text("Email", startX + 100, currentY);
     pdfDoc.text("Amount", startX + 300, currentY);
-
-    currentY += lineHeight;
-    pdfDoc.font("Helvetica");
-
-    // Rows
-    transactions.forEach((transaction) => {
+    pdfDoc.text("Company", startX + 400, currentY);
+    
+    for (const transaction of transactions) {
+      currentY += lineHeight;
       pdfDoc.text(transaction.date_of_transaction, startX, currentY);
       pdfDoc.text(transaction.user_email, startX + 100, currentY);
-      pdfDoc.text(transaction.amount.toString(), startX + 300, currentY);
-      currentY += lineHeight;
-    });
+      pdfDoc.text(transaction.amount.toString() + transaction.currency, startX + 300, currentY);
+      pdfDoc.text(transaction.company_name ?? "", startX + 400, currentY);
+    }
   }
+
 
   pdfDoc.end();
 
   return pdfPath;
-}
-
-export async function createDummyPDF(): Promise<string> {
-  // Dummy transactions data
-  const dummyTransactions: Transaction[] = [
-    {
-      date_of_transaction: "2023-01-01",
-      user_email: "user1@example.com",
-      amount: 100,
-    },
-    {
-      date_of_transaction: "2023-01-02",
-      user_email: "user2@example.com",
-      amount: 200,
-    },
-  ];
-
-  try {
-    const pdfPath = await generatePDF(dummyTransactions);
-    console.log(`PDF generated at: ${pdfPath}`);
-    return pdfPath;
-  } catch (error) {
-    console.error("Error generating PDF:", error);
-    return "";
-  }
 }
