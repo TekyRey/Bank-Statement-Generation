@@ -7,13 +7,12 @@ import { Transaction } from "./validationSchemas";
 
 const CSV_FILE_PATH = path.join(__dirname, "./transactions.csv");
 
-// Check if the file exists
 if (!fs.existsSync(CSV_FILE_PATH)) {
   console.error(`Error: File not found - ${CSV_FILE_PATH}`);
   throw new Error("File not found");
 }
 
-// Proceed with reading the file
+
 fs.createReadStream(CSV_FILE_PATH);
 
 export async function performFiltering(
@@ -32,13 +31,16 @@ export async function performFiltering(
             user_email: row.user_email,
             date_of_transaction: row.date_of_transaction,
             amount: parseFloat(row.amount),
+            currency: row.currency,
+            company_name: row.company_name,
           };
 
-          // Check if the transaction matches the criteria
           if (
             transaction.user_email === email &&
             transaction.date_of_transaction >= startDate &&
-            transaction.date_of_transaction <= endDate
+            transaction.date_of_transaction <= endDate &&
+            transaction.currency == transaction.currency &&
+            transaction.company_name == transaction.company_name
           ) {
             transactions.push(transaction);
           }

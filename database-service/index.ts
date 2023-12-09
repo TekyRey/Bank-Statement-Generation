@@ -21,7 +21,6 @@ async function connectWithRetry(amqpUrl: string, maxRetries: number = 10) {
   throw new Error("All connection attempts failed");
 }
 
-
 async function start() {
   const amqpUrl: string = "amqp://user:password@rabbitmq:5672";
   const inputQueue: string = "statement-request";
@@ -41,11 +40,9 @@ async function start() {
         if (msg) {
           console.log("Received:", msg.content.toString());
 
-          // Assuming the received message is in JSON format with filtering criteria
           const requestData = JSON.parse(msg.content.toString());
 
           try {
-            // Use the performFiltering function from the separate logic file
             const filteredData = await performFiltering(
               requestData.startDate,
               requestData.endDate,
@@ -53,7 +50,6 @@ async function start() {
             );
             console.log("Filtered data:", filteredData);
 
-            // Send the filtered data to the outputQueue
             channel.sendToQueue(
               outputQueue,
               Buffer.from(JSON.stringify(filteredData))

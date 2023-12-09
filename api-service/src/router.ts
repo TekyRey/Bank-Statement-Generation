@@ -32,16 +32,3 @@ router.post("/generate-statement", async (req, res) => {
 
 export default router;
 
-/*
-Example curl to call it:
-
-unix:
-curl -X POST http://localhost:3000/api/generate-statement \
-  -H "Content-Type: application/json" \
-  -d '{"startDate": "2023-01-01", "endDate": "2023-01-31", "email": "example@example.com"}'
-
-
-Windows:
-Invoke-WebRequest -Uri http://localhost:3000/api/generate-statement -Method POST -ContentType "application/json" -Body '{"startDate": "2023-01-01", "endDate": "2023-01-31", "email": "example@example.com"}'
-
-*/

@@ -1,4 +1,3 @@
-// src/index.ts
 import express from "express";
 import * as bodyParser from "body-parser";
 import router from "./src/router";

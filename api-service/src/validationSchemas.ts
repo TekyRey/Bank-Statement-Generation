@@ -4,7 +4,7 @@ export const transactionSchema = z.object({
   user_email: z.string().email(),
   date_of_transaction: z.string().refine(
     (value) => {
-      return /^\d{4}-\d{2}-\d{2}$/.test(value); // Accepts dates in the format "2022-01-20"
+      return /^\d{4}-\d{2}-\d{2}$/.test(value); 
     },
     { message: "Invalid date format. Use YYYY-MM-DD." }
   ),
@@ -14,13 +14,13 @@ export const transactionSchema = z.object({
 export const TransactionRequestSchema = z.object({
   date1: z.string().refine(
     (value) => {
-      return /^\d{4}-\d{2}-\d{2}$/.test(value); // Accepts dates in the format "2022-01-20"
+      return /^\d{4}-\d{2}-\d{2}$/.test(value); 
     },
     { message: "Invalid date format. Use YYYY-MM-DD." }
   ),
   date2: z.string().refine(
     (value) => {
-      return /^\d{4}-\d{2}-\d{2}$/.test(value); // Accepts dates in the format "2022-01-20"
+      return /^\d{4}-\d{2}-\d{2}$/.test(value); 
     },
     { message: "Invalid date format. Use YYYY-MM-DD." }
   ),

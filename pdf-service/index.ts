@@ -1,5 +1,5 @@
 import amqp from "amqplib";
-import { generatePDF, createDummyPDF } from "./src/pdfGenerator";
+import { generatePDF } from "./src/pdfGenerator";
 
 async function connectWithRetry(amqpUrl: string, maxRetries: number = 10) {
   let retries = 0;
@@ -39,21 +39,21 @@ async function start() {
       async (msg) => {
         if (msg) {
           console.log("Received:", msg.content.toString());
-        // extract data
         const data = JSON.parse(msg.content.toString());
 
-        // make it accessible for the generatePDF function(format it so generatePDF can use it)
         const transactions = data.map((transaction: any) => {
           return {
             date_of_transaction: transaction.date_of_transaction,
             user_email: transaction.user_email,
             amount: transaction.amount,
+            currency: transaction.currency,
+            company_name: transaction.company_name,
+
+
           };
         });
-        // call generatePDF function
         const pdfLocation = await generatePDF(transactions);
         console.log(`PDF generated at: ${pdfLocation}`);
-        //   let pdfLocation = await createDummyPDF();
           channel.sendToQueue(
             outputQueue,
             Buffer.from(
