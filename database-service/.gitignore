@@ -1,0 +1,10 @@
+
+# Node.js
+node_modules/
+dist/
+*.log
+
+# TypeScript
+*.js
+*.js.map
+*.d.ts
