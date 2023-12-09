@@ -54,6 +54,15 @@ I used RabbitMQ as the message broker to enable communication between services. 
 - Install Node.js and npm: [Node.js Official Website](https://nodejs.org/)
 - Install TypeScript globally: `npm install -g typescript`
 
+### 2. Environment Variables
+
+Create a `.env` file with your fastmail credentials
+
+    ```dotenv
+    FASTMAIL_EMAIL=Your fastmail email
+    FASTMAIL_APP_PASSWORD=your fastmail app password
+   
+
 ### 2. Docker
 
 - Install Docker: [Docker Official Website](https://www.docker.com/)
