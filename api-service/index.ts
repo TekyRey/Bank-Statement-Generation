@@ -1,7 +1,7 @@
 // src/index.ts
-import * as express from "express";
+import express from "express";
 import * as bodyParser from "body-parser";
-import router from "./api/src/router";
+import router from "./src/router";
 
 const app = express();
 const port = 3000;

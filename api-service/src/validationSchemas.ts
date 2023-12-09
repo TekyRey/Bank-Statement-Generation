@@ -11,7 +11,7 @@ export const transactionSchema = z.object({
   amount: z.number(),
 });
 
-export const generateStatementRequestSchema = z.object({
+export const TransactionRequestSchema = z.object({
   date1: z.string().refine(
     (value) => {
       return /^\d{4}-\d{2}-\d{2}$/.test(value); // Accepts dates in the format "2022-01-20"
@@ -28,6 +28,6 @@ export const generateStatementRequestSchema = z.object({
 });
 
 export type Transaction = z.infer<typeof transactionSchema>;
-export type GenerateStatementRequest = z.infer<
-  typeof generateStatementRequestSchema
+export type TransactionRequest = z.infer<
+  typeof TransactionRequestSchema
 >;

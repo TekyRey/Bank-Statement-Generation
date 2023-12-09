@@ -1,11 +1,11 @@
 // src/database/service.ts
-import * as fs from "fs";
-import * as csvParser from "csv-parser";
-import * as path from "path";
+import fs from "fs";
+import csvParser from "csv-parser";
+import path from "path";
 
-import { Transaction } from "../../common/validationSchemas";
+import { Transaction } from "./validationSchemas";
 
-const CSV_FILE_PATH = path.join(__dirname, "../../shared/transactions.csv");
+const CSV_FILE_PATH = path.join(__dirname, "./transactions.csv");
 
 // Check if the file exists
 if (!fs.existsSync(CSV_FILE_PATH)) {
@@ -16,10 +16,10 @@ if (!fs.existsSync(CSV_FILE_PATH)) {
 // Proceed with reading the file
 fs.createReadStream(CSV_FILE_PATH);
 
-export async function generateStatement(
-  date1: string,
-  date2: string,
-  user_email: string
+export async function performFiltering(
+  startDate: string,
+  endDate: string,
+  email: string
 ): Promise<Transaction[]> {
   const transactions: Transaction[] = [];
 
@@ -36,9 +36,9 @@ export async function generateStatement(
 
           // Check if the transaction matches the criteria
           if (
-            transaction.user_email === user_email &&
-            transaction.date_of_transaction >= date1 &&
-            transaction.date_of_transaction <= date2
+            transaction.user_email === email &&
+            transaction.date_of_transaction >= startDate &&
+            transaction.date_of_transaction <= endDate
           ) {
             transactions.push(transaction);
           }
@@ -54,3 +54,4 @@ export async function generateStatement(
       });
   });
 }
+

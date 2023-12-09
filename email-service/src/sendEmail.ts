@@ -1,4 +1,3 @@
-// email-service/src/email-service.ts
 import * as nodemailer from "nodemailer";
 
 const dotenv = require("dotenv");
